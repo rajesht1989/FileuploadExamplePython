@@ -41,10 +41,10 @@ def upload():
     df_initial = pd.read_csv("uploads/" + file.filename)
     #import dataset
 
-    df = df_initial[df_initial['Year'].isin([2018, 2019])]
+    df = df_initial[df_initial['Year'].isin([2021, 2022])]
 
-    # Filter the rows for "2020"
-    df_final = df_initial[df_initial['Year'] == 2020]
+    # Filter the rows for "2023"
+    df_final = df_initial[df_initial['Year'] == 2023]
 
     print(df.head())
     print(df_final.head())
@@ -113,11 +113,12 @@ def upload():
 
     ### final 2 variables to be pased to frontend
     df_Churned = df_final[df_final['Churned'] == 1]
-    stringTobePassed = "The prediction is made with an aaccuracy of "+ str(accuracy * 100) + "%" ## the v
+    recCount  = len(df_Churned)
+    stringTobePassed = "  Based on our advanced system, "+ str(recCount) +" employees have been predicted to be at risk of churn, with an accuracy rate of "+ str(round(accuracy * 100,2)) + "%"
 
 
     ## These 2 variables are be passed to the frontend and both of them are in json formate
-
+    df_initial = df_initial[df_initial['Churned'] == "Yes"]
     finaldata = df_initial.to_dict();
     finaldata["output"] = stringTobePassed;
     finaldata["td"] = df_Churned.to_dict();
